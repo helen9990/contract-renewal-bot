@@ -85,6 +85,8 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
 .meet-link-opt{display:block;padding:11px 14px;border-bottom:1px solid #eee;text-decoration:none;color:#333;font-size:13.5px;transition:background .15s}
 .meet-link-opt:last-of-type{border-bottom:none}
 .meet-link-opt:hover{background:#f5f5f5}
+.btn-reset{margin-left:auto;padding:3px 10px;background:#fff;color:#999;border:1px solid #ddd;border-radius:5px;font-size:11px;cursor:pointer;font-family:inherit}
+.btn-reset:hover{background:#f5f5f5;color:#333;border-color:#bbb}
 </style>
 </head>
 <body>
@@ -98,7 +100,7 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
 <!-- LEFT -->
 <div class="left">
   <div class="card">
-    <div class="card-head"><div class="num">1</div> 기본 정보 입력</div>
+    <div class="card-head"><div class="num">1</div> 기본 정보 입력<button class="btn-reset" onclick="resetAll()">전체 초기화</button></div>
     <div class="card-body">
       <div class="row">
         <label>담당자 (매니저)</label>
@@ -291,6 +293,63 @@ function fmt(n){ return parseInt(n).toLocaleString('ko-KR'); }
 
 // ── 기업 접두어 ──
 function togglePfx(){ pfxOn=!pfxOn; document.getElementById('pfxBtn').classList.toggle('off',!pfxOn); generate(); }
+
+// ── 전체 초기화 ──
+function resetAll(){
+  if(!confirm('모든 입력 내용을 초기화할까요?')) return;
+  _ready=false;
+
+  // 기본 정보
+  document.getElementById('managerSel').value='';
+  document.getElementById('managerCustomRow').style.display='none';
+  document.getElementById('managerCustomName').value='';
+  document.getElementById('managerCustomEmail').value='';
+  document.getElementById('senderEmail').value='';
+  document.getElementById('companyName').value='';
+  pfxOn=true; document.getElementById('pfxBtn').classList.remove('off');
+  document.getElementById('contactName').value='';
+  document.getElementById('titleSel').value='대표님';
+  document.getElementById('titleCustom').style.display='none';
+  document.getElementById('titleCustom').value='';
+  document.getElementById('expiryDate').value='';
+  document.getElementById('curFee').value='';
+  document.getElementById('deadlineDate').value='';
+
+  // 티어
+  tierIds.forEach(id=>document.getElementById('tier_'+id)?.remove());
+  tierIds=[]; tierCnt=0;
+
+  // 문구 선택
+  document.getElementById('chkIncrease').checked=false; toggleOpt('dIncrease',false); calcIncrease();
+  document.getElementById('chkDeposit').checked=false; toggleOpt('dDeposit',false);
+  document.getElementById('depOld').value=''; document.getElementById('depNew').value='';
+  document.getElementById('depositResult').style.display='none';
+  document.getElementById('chkFreeze').checked=false; toggleOpt('dFreeze',false);
+  document.getElementById('freezeMonths').value='';
+
+  // 미팅 제안
+  document.getElementById('meetTog').checked=false;
+  document.getElementById('meetSec').classList.remove('on');
+  document.getElementById('schedAddTog').checked=true;
+  document.getElementById('schedAddSec').style.display='flex';
+  schIds.forEach(id=>document.getElementById('sch_'+id)?.remove());
+  schIds=[]; schCnt=0;
+
+  // 안부 인사
+  season='summer';
+  document.querySelectorAll('.sea-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.sea-btn')[1].classList.add('on');
+  document.getElementById('seaPrev').textContent=SEASONS['summer'];
+  document.getElementById('cusArea').style.display='none';
+  document.getElementById('cusGreet').value='';
+
+  // 기본값 재생성
+  addTier(3,''); addTier(6,'');
+  addSchedule(); addSchedule();
+
+  _ready=true;
+  generate();
+}
 
 // ── 담당자 ──
 function onManagerChange(){
