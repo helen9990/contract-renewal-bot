@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>재계약 이메일 생성봇 | STAGE9</title>
+<title>재계약 이메일 작성봇 | STAGE9</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -23,9 +23,6 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
 .row input,.row select{flex:1;padding:7px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;color:#333;font-family:inherit;background:#fff}
 .row input:focus,.row select:focus{outline:none;border-color:#555;box-shadow:0 0 0 2px rgba(0,0,0,.08)}
 .unit{font-size:12px;color:#888;white-space:nowrap}
-.pfx-wrap{display:flex;gap:5px;flex:1;align-items:center}
-.pfx-tag{padding:6px 10px;background:#f5f5f5;border:1px solid #ccc;border-radius:6px;font-size:12px;color:#333;cursor:pointer;user-select:none;white-space:nowrap;font-weight:600}
-.pfx-tag.off{background:#f5f5f5;border-color:#ddd;color:#bbb;text-decoration:line-through}
 .tier{display:flex;align-items:center;gap:5px;background:#f8f8f8;border:1px solid #e0e0e0;border-radius:7px;padding:7px 10px;flex-wrap:wrap}
 .tier select.mi-sel{width:88px;padding:5px 6px;border:1px solid #ddd;border-radius:5px;font-size:12px;font-family:inherit;background:#fff}
 .tier input.mi-cus{width:54px;padding:5px 6px;border:1px solid #ddd;border-radius:5px;font-size:12px;font-family:inherit;text-align:center}
@@ -92,8 +89,8 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
 <body>
 <header>
   <div class="logo">S9</div>
-  <h1>재계약 이메일 생성봇</h1>
-  <span>STAGE9 삼성점</span>
+  <h1>재계약 이메일 작성봇</h1>
+  <span>STAGE9 삼성점 </span>
 </header>
 <div class="main">
 
@@ -105,7 +102,7 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
       <div class="row">
         <label>담당자 (매니저)</label>
         <select id="managerSel" onchange="onManagerChange()">
-          <option value="" disabled selected>선택하세요</option>
+          <option value="" disabled selected>선택해주세요</option>
           <option value="장혜림" data-email="helen@stage9.co.kr">장혜림</option>
           <option value="지성미" data-email="sarah@stage9.co.kr">지성미</option>
           <option value="custom">직접 입력</option>
@@ -118,10 +115,7 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
       </div>
       <div class="row">
         <label>기업명</label>
-        <div class="pfx-wrap">
-          <span class="pfx-tag" id="pfxBtn" onclick="togglePfx()">주식회사</span>
-          <input type="text" id="companyName" placeholder="기업명 입력">
-        </div>
+        <input type="text" id="companyName" placeholder="기업명 입력">
       </div>
       <div class="row"><label>대표자 성함</label><input type="text" id="contactName" placeholder="홍길동"></div>
       <div class="row">
@@ -140,7 +134,7 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
         <span class="unit">원 (VAT별도)</span>
       </div>
       <div>
-        <div style="font-size:12px;color:#666;margin-bottom:6px;font-weight:600">제안 월 서비스이용료</div>
+        <div style="font-size:12px;color:#666;margin-bottom:6px;font-weight:600">월 서비스 이용료</div>
         <div id="tierList"></div>
         <button class="btn-add" onclick="addTier()">+ 조건 추가</button>
       </div>
@@ -203,7 +197,7 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
         <label class="tog"><input type="checkbox" id="meetTog" onchange="toggleMeet(this.checked)"><span class="tog-sl"></span></label>
       </div>
       <div class="meet-sec" id="meetSec">
-        <div class="row"><label>발신자 이메일</label><input type="email" id="senderEmail" placeholder="manager@stage9.co.kr"></div>
+        <div class="row"><label>발신 이메일</label><input type="email" id="senderEmail" placeholder="manager@stage9.co.kr"></div>
         <div class="tog-row" style="padding:2px 0">
           <span class="tog-lbl" style="font-size:12px;font-weight:500;color:#555">일정 추가</span>
           <label class="tog"><input type="checkbox" id="schedAddTog" checked onchange="toggleSchedAdd(this.checked)"><span class="tog-sl"></span></label>
@@ -218,7 +212,7 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
           </div>
           <button class="btn-add" id="addSchBtn" onclick="addSchedule()">+ 일정 추가 (최대 9개)</button>
           <div style="background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:12px;font-size:12px;color:#555;line-height:1.7">
-            ✅ 이메일 본문에 <strong>클릭형 일정 버튼</strong>이 자동 삽입됩니다.<br>
+            ※ 이메일 본문에 <strong>클릭할 일정 버튼</strong>이 함께 삽입됩니다.<br>
             받는 분이 버튼 클릭 → 해당 날짜로 답장 이메일이 자동으로 열립니다.
           </div>
         </div>
@@ -236,11 +230,10 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
         <button class="sea-btn" onclick="setSeason('winter',this)">겨울</button>
         <button class="sea-btn" onclick="setSeason('custom',this)">직접 입력</button>
       </div>
-      <div class="sea-prev" id="seaPrev">무더운 날씨에 건강 잘 챙기시고, 행복한 하루 보내시길 바랍니다.</div>
+      <div class="sea-prev" id="seaPrev">무더운 날씨에 건강 잘 챙기시고, 평안한 하루 보내시길 바랍니다.</div>
       <div class="cus-area" id="cusArea"><textarea id="cusGreet" placeholder="안부 인사를 직접 입력하세요..."></textarea></div>
     </div>
   </div>
-
 
 </div>
 
@@ -248,7 +241,7 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
 <div class="right">
   <div class="subj-box">
     <span class="subj-lbl">제목</span>
-    <span class="subj-text" id="subjText">[STAGE9] (기업명) 삼성점 재계약 안내드립니다.</span>
+    <span class="subj-text" id="subjText">[STAGE9] (기업명) 재계약 안내드립니다.</span>
     <button class="btn-cp" onclick="cpSubject(this)">복사</button>
   </div>
   <div class="body-box">
@@ -257,7 +250,7 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
       <button class="btn-cp" onclick="cpBody(this)">복사하기</button>
     </div>
     <div class="body-content" id="bodyContent" contenteditable="true">
-      <div class="ph"><div class="ico">✉️</div><div class="t1">이메일을 생성해주세요</div><div class="t2">왼쪽 양식을 작성하고 '이메일 생성하기' 버튼을 누르세요</div></div>
+      <div class="ph"><div class="ico">✉️</div><div class="t1">이메일을 작성해주세요</div><div class="t2">왼쪽 양식을 작성하고 '이메일 작성하기' 버튼을 누르세요</div></div>
     </div>
   </div>
 </div>
@@ -268,24 +261,40 @@ header span{font-size:12px;color:#aaa;margin-left:4px}
 const TC  = '#555';
 const TCL = '#e8e8e8';
 const SEASONS = {
-  spring:'일교차 큰 날씨에 건강 유의하시고, 평안한 하루 보내시길 바랍니다.',
-  summer:'무더운 날씨에 건강 잘 챙기시고, 행복한 하루 보내시길 바랍니다.',
-  autumn:'일교차 큰 날씨에 건강 잘 챙기시고, 오늘도 좋은 하루 보내시길 바랍니다.',
+  spring:'일교차 큰 날씨에 건강 잘 챙기시고, 활기찬 하루 보내시길 바랍니다.',
+  summer:'무더운 날씨에 건강 잘 챙기시고, 평안한 하루 보내시길 바랍니다.',
+  autumn:'일교차 큰 날씨에 건강 잘 챙기시고, 좋은 하루 보내시길 바랍니다.',
   winter:'추운 날씨에 감기 조심하시고, 편안한 하루 보내시길 바랍니다.'
 };
 
-let pfxOn=true, season='summer';
+let season='summer';
 let tierIds=[], schIds=[], tierCnt=0, schCnt=0;
 let _ready=false;
 
 window.addEventListener('DOMContentLoaded',()=>{
-  addTier(3,''); addTier(6,'');
+  addTier(6,''); addTier(12,'');
   addSchedule(); addSchedule();
+  document.getElementById('expiryDate').value=getDefaultExpiryDate();
+  document.getElementById('deadlineDate').value=getLastBizDay();
   _ready=true;
   generate();
   document.querySelector('.left').addEventListener('input', generate);
   document.querySelector('.left').addEventListener('change', generate);
 });
+
+// ── 2개월 후 말일 ──
+function getDefaultExpiryDate(){
+  const d=new Date();
+  const last=new Date(d.getFullYear(),d.getMonth()+3,0);
+  return `${last.getFullYear()}-${String(last.getMonth()+1).padStart(2,'0')}-${String(last.getDate()).padStart(2,'0')}`;
+}
+
+// ── 당월 마지막 영업일 ──
+function getLastBizDay(){
+  const d=new Date();
+  const last=new Date(d.getFullYear(),d.getMonth()+1,0);
+  return `${last.getFullYear()}-${String(last.getMonth()+1).padStart(2,'0')}-${String(last.getDate()).padStart(2,'0')}`;
+}
 
 // ── 숫자/금액 ──
 function moneyFmt(el){ const r=el.value.replace(/[^0-9]/g,''); el.value=r?parseInt(r).toLocaleString('ko-KR'):''; }
@@ -293,35 +302,28 @@ function numOnly(el){ el.value=el.value.replace(/[^0-9]/g,''); }
 function getM(id){ const el=document.getElementById(id); return el?(parseInt(el.value.replace(/,/g,''))||0):0; }
 function fmt(n){ return parseInt(n).toLocaleString('ko-KR'); }
 
-// ── 기업 접두어 ──
-function togglePfx(){ pfxOn=!pfxOn; document.getElementById('pfxBtn').classList.toggle('off',!pfxOn); generate(); }
-
 // ── 전체 초기화 ──
 function resetAll(){
   if(!confirm('모든 입력 내용을 초기화할까요?')) return;
   _ready=false;
 
-  // 기본 정보
   document.getElementById('managerSel').value='';
   document.getElementById('managerCustomRow').style.display='none';
   document.getElementById('managerCustomName').value='';
   document.getElementById('managerCustomEmail').value='';
   document.getElementById('senderEmail').value='';
   document.getElementById('companyName').value='';
-  pfxOn=true; document.getElementById('pfxBtn').classList.remove('off');
   document.getElementById('contactName').value='';
   document.getElementById('titleSel').value='대표님';
   document.getElementById('titleCustom').style.display='none';
   document.getElementById('titleCustom').value='';
-  document.getElementById('expiryDate').value='';
+  document.getElementById('expiryDate').value=getDefaultExpiryDate();
   document.getElementById('curFee').value='';
-  document.getElementById('deadlineDate').value='';
+  document.getElementById('deadlineDate').value=getLastBizDay();
 
-  // 티어
   tierIds.forEach(id=>document.getElementById('tier_'+id)?.remove());
   tierIds=[]; tierCnt=0;
 
-  // 문구 선택
   document.getElementById('chkIncrease').checked=false; toggleOpt('dIncrease',false); calcIncrease();
   document.getElementById('chkDeposit').checked=false; toggleOpt('dDeposit',false);
   document.getElementById('depOld').value=''; document.getElementById('depNew').value='';
@@ -329,7 +331,6 @@ function resetAll(){
   document.getElementById('chkFreeze').checked=false; toggleOpt('dFreeze',false);
   document.getElementById('freezeMonths').value='';
 
-  // 미팅 제안
   document.getElementById('meetTog').checked=false;
   document.getElementById('meetSec').classList.remove('on');
   document.getElementById('schedAddTog').checked=true;
@@ -337,7 +338,6 @@ function resetAll(){
   schIds.forEach(id=>document.getElementById('sch_'+id)?.remove());
   schIds=[]; schCnt=0;
 
-  // 안부 인사
   season='summer';
   document.querySelectorAll('.sea-btn').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.sea-btn')[1].classList.add('on');
@@ -345,8 +345,7 @@ function resetAll(){
   document.getElementById('cusArea').style.display='none';
   document.getElementById('cusGreet').value='';
 
-  // 기본값 재생성
-  addTier(3,''); addTier(6,'');
+  addTier(6,''); addTier(12,'');
   addSchedule(); addSchedule();
 
   _ready=true;
@@ -420,7 +419,7 @@ function addSchedule(){
   const d=document.createElement('div'); d.className='sch-item'; d.id='sch_'+id;
   d.innerHTML=`
     <div class="sch-head"><span id="sl_${id}">일정 ${schIds.length}</span><button class="btn-rm" onclick="rmSch(${id})">×</button></div>
-    <div class="sch-row"><input type="date" id="sd_${id}"><select id="sap_${id}"><option>오전</option><option>오후</option><option value="오전/오후">오전·오후 모두</option></select></div>
+    <div class="sch-row"><input type="date" id="sd_${id}"><select id="sap_${id}"><option>오전 </option><option>오후</option><option value="오전/오후">오전·오후 모두</option></select></div>
     <div class="sch-row">
       <select id="st_${id}" style="flex:1" onchange="onTimeSel(${id})">
         <option value="">시간 (선택사항)</option>
@@ -464,13 +463,12 @@ function fD(ds){ if(!ds)return''; const d=new Date(ds+'T00:00:00'),dy=['일','�
 function fDS(ds){ if(!ds)return''; const d=new Date(ds+'T00:00:00'),dy=['일','월','화','수','목','금','토']; return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}(${dy[d.getDay()]})`; }
 function fDY(ds){ if(!ds)return'-'; const d=new Date(ds+'T00:00:00'); return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`; }
 
-
-// ── 이메일 생성 ──
+// ── 이메일 작성 ──
 function generate(){
   const managerSel=document.getElementById('managerSel');
   const manager=managerSel.value==='custom'?(document.getElementById('managerCustomName').value.trim()||'담당자'):managerSel.value;
   const coIn   =document.getElementById('companyName').value.trim();
-  const coFull =pfxOn&&coIn?`주식회사 ${coIn}`:(coIn||'(기업명)');
+  const coFull =coIn||'(기업명)';
   const name   =document.getElementById('contactName').value.trim()||'000';
   const title  =getTitle();
   const expiry =document.getElementById('expiryDate').value;
@@ -486,15 +484,15 @@ function generate(){
   const schs=getSchedules();
   const greet=season==='custom'?(document.getElementById('cusGreet').value.trim()||''):(SEASONS[season]||'');
 
-  document.getElementById('subjText').textContent=`[STAGE9] ${coFull} 삼성점 재계약 안내드립니다.`;
+  document.getElementById('subjText').textContent=`[STAGE9] ${coFull} 재계약 안내드립니다.`;
 
   let h='';
   h+=`<p>안녕하세요, ${name} ${title}<br>스테이지나인 삼성점 ${manager} 매니저입니다.<br>${coFull}의 계약 종료일이 다가오고 있어, 재계약 연장 여부 확인을 위해 메일 드립니다.</p><br>`;
   h+=`<p><strong>${coFull} 재계약 연장 안내</strong></p><ul style="padding-left:20px;margin:8px 0 0;line-height:2.2">`;
   if(expiry) h+=`<li>계약 만료일 : <strong>${fD(expiry)}</strong></li>`;
   if(cur)    h+=`<li>기존 월 서비스이용료 : 월 <strong>${fmt(cur)}원</strong> (VAT별도)</li>`;
-  if(tiers.length) h+=`<li>제안 월 서비스이용료 : ${tiers.map(t=>`${t.months}개월 이상 계약 시 <strong>${fmt(t.amount)}원</strong>(VAT별도)`).join(' / ')}</li>`;
-  if(ddl)    h+=`<li>재계약 답변 확정 기한 : <strong>${fD(ddl)}</strong></li>`;
+  if(tiers.length) h+=`<li>월 서비스 이용료 : ${tiers.map(t=>`${t.months}개월 이상 계약 시 <strong>${fmt(t.amount)}원</strong>(VAT별도)`).join(' / ')}</li>`;
+  if(ddl)    h+=`<li>재계약 확정기한 : <strong style="color:#c00000">${fD(ddl)}</strong></li>`;
   h+=`</ul><br>`;
 
   if(cur&&tiers.length){ h+=buildTable(coFull,expiry,cur,tiers,ddl,doFrz,frz)+'<br>'; }
@@ -503,21 +501,21 @@ function generate(){
 
   if(doInc&&tiers.length){
     const best=tiers.reduce((b,t)=>t.months>=(b?.months||0)?t:b,null);
-    const pTxt=best&&cur?`<strong>${best.months}개월 이상 계약 시 약 ${((best.amount-cur)/cur*100).toFixed(0)}% 인상된 금액</strong>으로`:'아주 소폭의 금액 상승으로';
-    h+=`<p>부동산 임대 특성상, 매해 인건비 및 물가 상승으로 인한 임대료 상승이 불가피합니다.<br>스테이지나인 내부 정책 상 10% 이상 인상되지만, 삼성점을 잘 이용해주시고 계셔, ${pTxt} 제안드립니다.</p><br>`;
+    const rate=best&&cur?((best.amount-cur)/cur*100).toFixed(0):'';
+    h+=`<p>부동산 임대 특성상, 매해 인건비 및 물가 상승으로 인한 임대료 상승이 불가피합니다.<br>스테이지나인 내부 정책 상 10% 이상 인상되지만, 삼성점을 잘 이용해주시고 계셔, <strong>${best?best.months:''}개월 이상 계약 시 약 ${rate}% 인상된 금액</strong>으로 제안드립니다.</p><br>`;
   }
   if(doDep&&dO&&dN){
-    h+=`<p>추가로, 2024년 4월부터 변경된 예치금 약관 정책이 적용되어 재계약 시 예치금은 정가의 2개월 분으로 납부 받고 있습니다.<br>현재 ${coFull}의 기존 예치금은 <strong>${fmt(dO)}원</strong>으로 확인되며,<br>해당 호실의 예치금은 정가의 2개월 분 <strong>${fmt(dN)}원</strong>임으로 예치금 차액분 <strong>${fmt(dN-dO)}원</strong>의 추가 입금을 ${expiry?`<strong>${fD(expiry)}</strong>까지`:'계약 만료일까지'} 부탁드립니다.</p><br>`;
+    h+=`<p>해당 호실의 예치금은 정가의 2개월 분 <strong>${fmt(dN)}원</strong>임으로 예치금 차액분 <strong>${fmt(dN-dO)}원</strong>의 추가 입금을 계약 만료일까지 부탁드립니다.</p><br>`;
   }
   if(doFrz&&frz){
     h+=`<p>부동산 임대 특성상, 매해가 지나면 임대료 상승이 있으나, 스테이지나인 삼성점을 잘 이용해주시고 계셔, <strong>${frz}개월 이상 계약 시, 동결 금액</strong>으로 제안드립니다.</p><br>`;
   }
   if(meetOn){
-    h+=`<p>재계약 조율 및 스테이지나인 이용 만족도 등 관련하여 이야기 나누면 좋을 것 같아, ${title}께 미팅 제안 드립니다.<br>업무로 많이 바쁘시겠지만, 가능하신 일정 확인 후 회신 주시면 찾아 뵐 수 있도록 하겠습니다.<br>(미팅이 어려우신 경우, 이메일로 재계약 회신 부탁드립니다 :) )</p><br>`;
+    h+=`<p>재계약 조율 및 스테이지나인 이용 만족도 등 관련하여 이야기 나누면 좋을 것 같아, ${title}께 미팅 제안 드립니다.<br>아무로 많이 바쁘시겠지만, 가능하신 일정 확인 후 회신 주시면 찾아 뵐 수 있도록 하겠습니다.<br>(미팅이 어려우신 경우, 이메일로 재계약 회신 부탁드립니다 :) )</p><br>`;
     const schedAddOn=document.getElementById('schedAddTog')?.checked??true;
     if(schedAddOn&&schs.length>0){ h+=buildMeetBox(schs)+'<br>'; }
   }
-  const dlTxt=ddl?`<strong>${fD(ddl)}</strong>까지`:'확정기한까지';
+  const dlTxt=ddl?`<strong style="color:#c00000">${fD(ddl)}</strong>까지`:'확정 기한까지';
   h+=`<p>${dlTxt} 꼭 재계약 회신 부탁드리며, 추가 문의사항은 언제든지 문의 부탁드립니다.</p><br>`;
   if(greet) h+=`<p>${greet}</p><br>`;
   h+=`<p>감사합니다.</p>`;
@@ -563,12 +561,12 @@ function buildTable(co,expiry,cur,tiers,ddl,isFreeze,frzMonths){
 function buildMeetBox(schs){
   const sender=document.getElementById('senderEmail').value.trim();
   const coIn=document.getElementById('companyName').value.trim();
-  const coFull=pfxOn&&coIn?`주식회사 ${coIn}`:(coIn||'(기업명)');
+  const coFull=coIn||'(기업명)';
   const subj=encodeURIComponent(`Re: [STAGE9] ${coFull} 삼성점 재계약 미팅 일정 회신`);
 
   const dateLines=schs.map(s=>{
     const ds=fDS(s.date), ts=s.time?` ${s.time}`:'';
-    return `✅ ${ds} ${s.ampm}${ts}`;
+    return `▶ ${ds} ${s.ampm}${ts}`;
   });
   const emailOptOn=document.getElementById('emailOptTog')?.checked??true;
   if(emailOptOn) dateLines.push(`✉️ 이메일로 재계약 여부 답변 드리겠습니다 :)`);
