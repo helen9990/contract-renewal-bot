@@ -527,11 +527,11 @@ function generate(){
 function buildTable(co,expiry,cur,tiers,ddl,isFreeze,frzMonths){
   const yr=ddl?new Date(ddl+'T00:00:00').getFullYear():new Date().getFullYear();
   const cols=3+tiers.length+1;
-  const tdSt='padding:8px 10px;text-align:center;font-size:12px;border:1px solid #ccc';
-  const thMSt=`background:${TC};color:#fff;padding:9px 12px;text-align:center;font-weight:700;font-size:13px;border:1px solid #ccc`;
-  const thSSt=`background:${TCL};color:#333;padding:8px 10px;text-align:center;font-weight:600;font-size:12px;border:1px solid #ccc`;
+  const tdSt='padding:6px 10px;text-align:center;font-size:12px;border:1px solid #ccc;white-space:nowrap';
+  const thMSt=`background:${TC};color:#fff;padding:7px 12px;text-align:center;font-weight:700;font-size:13px;border:1px solid #ccc;white-space:nowrap`;
+  const thSSt=`background:${TCL};color:#333;padding:6px 10px;text-align:center;font-weight:600;font-size:12px;border:1px solid #ccc;white-space:nowrap`;
 
-  let h=`<table width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;border-collapse:collapse;margin:12px 0;font-family:'Malgun Gothic',sans-serif">`;
+  let h=`<table cellspacing="0" cellpadding="0" border="0" style="border-collapse:collapse;margin:12px 0;font-family:'Malgun Gothic',sans-serif">`;
   h+=`<thead>`;
   h+=`<tr><th colspan="${cols}" align="center" bgcolor="${TC}" style="${thMSt}">${yr} 삼성점 재계약 안내</th></tr>`;
   h+=`<tr>`;
